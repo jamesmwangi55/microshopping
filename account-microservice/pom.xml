@@ -7,12 +7,10 @@
     <parent>
         <groupId>com.jamesmwangi</groupId>
         <artifactId>microshopping</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
 
-    <groupId>com.jamesmwangi</groupId>
     <artifactId>account-microservice</artifactId>
-    <version>1.0.0</version>
 
 
     <properties>

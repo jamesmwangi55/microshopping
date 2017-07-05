@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Annotation profile for account-microservice" enabled="true">
+        <sourceOutputDir name="src/main/generated" />
+        <sourceTestOutputDir name="src/test/generated" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="codegen.output" value="$PROJECT_DIR$/account-microservice/src/main" />
+        <processor name="io.vertx.codegen.CodeGenProcessor" />
+        <module name="account-microservice" />
+      </profile>
+      <profile name="Annotation profile for microservice-blueprint-common" enabled="true">
+        <sourceOutputDir name="src/main/generated" />
+        <sourceTestOutputDir name="src/test/generated" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="codegen.output" value="$PROJECT_DIR$/microservice-blueprint-common/src/main" />
+        <processor name="io.vertx.codegen.CodeGenProcessor" />
+        <module name="microservice-blueprint-common" />
+      </profile>
+      <profile name="Annotation profile for microshopping" enabled="true">
+        <sourceOutputDir name="src/main/generated" />
+        <sourceTestOutputDir name="src/test/generated" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="codegen.output" value="$PROJECT_DIR$/api-gateway/src/main" />
+        <processor name="io.vertx.codegen.CodeGenProcessor" />
+        <module name="api-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="account-microservice" target="1.8" />
+      <module name="api-gateway" target="1.8" />
+      <module name="microservice-blueprint-common" target="1.8" />
+      <module name="microshopping" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

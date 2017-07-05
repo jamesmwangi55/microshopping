@@ -10,11 +10,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: io.vertx.blueprint:microservice-blueprint-common:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: io.vertx.blueprint:account-microservice:1.0.0" level="project" />
+    <orderEntry type="module" module-name="account-microservice" />
+    <orderEntry type="library" name="Maven: io.vertx.blueprint:microservice-blueprint-common:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: io.vertx:vertx-auth-oauth2:3.4.1" level="project" />
     <orderEntry type="library" name="Maven: io.vertx:vertx-auth-common:3.4.1" level="project" />
     <orderEntry type="library" name="Maven: io.vertx:vertx-jwt:3.4.1" level="project" />
+    <orderEntry type="module" module-name="microservice-blueprint-common" />
     <orderEntry type="library" name="Maven: io.vertx:vertx-core:3.4.1" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.8.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.8.Final" level="project" />
