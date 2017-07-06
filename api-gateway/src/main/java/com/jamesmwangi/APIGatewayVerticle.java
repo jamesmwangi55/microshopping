@@ -1,15 +1,17 @@
 package com.jamesmwangi;
 
 import io.vertx.core.Future;
+import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+import io.vertx.core.net.JksOptions;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.auth.oauth2.OAuth2FlowType;
 import io.vertx.ext.auth.oauth2.impl.OAuth2API;
 import io.vertx.ext.auth.oauth2.providers.KeycloakAuth;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.BodyHandler;
-import io.vertx.ext.web.handler.UserSessionHandler;
+import io.vertx.ext.web.handler.*;
+import io.vertx.ext.web.sstore.LocalSessionStore;
 
 public class APIGatewayVerticle extends BaseMicroserviceVerticle {
 
@@ -36,7 +38,7 @@ public class APIGatewayVerticle extends BaseMicroserviceVerticle {
     router.route().handler(BodyHandler.create());
     
     //version handler
-    router.get("/api/v").handler(this::thisApiVersion);
+    router.get("/api/v").handler(this::apiVersion);
     
     // create oauth2 instance for keycloak
     oauth2 = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, config());
@@ -49,6 +51,45 @@ public class APIGatewayVerticle extends BaseMicroserviceVerticle {
     
     router.get("/uaa").handler(this::authUaaHandler);
     router.get("/login").handler(this::loginEntryHandler);
-    // TODO: 7/5/17 resume from here 
+    router.post("/logout").handler(this::logoutHandler);
+
+    // api dispatcher
+    router.route("/api/*").handler(this::dispatchRequests);
+
+
+    // init heart beat check
+    initHealthCheck();
+
+    //static content
+    router.route("/*").handler(StaticHandler.create());
+
+    // enable HTTPS
+    HttpServerOptions httpServerOptions = new HttpServerOptions()
+        .setSsl(true)
+        .setKeyStoreOptions(new JksOptions().setPath("server.jks").setPassword("123456"));
+
+    vertx.createHttpServer(httpServerOptions)
+        .requestHandler(router::accept)
+        .listen(port, host,ar->{
+          if(ar.succeeded()){
+            publishApiGateway(host, port);
+            future.complete();
+            logger.info("API Gateway in running on port " + port);
+
+            //publish log
+            publishLogGateway("api_getway_init_success:" + port );
+          } else {
+            future.fail(ar.cause());
+          }
+        });
   }
+
+  protected void enableLocalSession(Router router){
+    router.route().handler(CookieHandler.create());
+    router.route().handler(SessionHandler.create(
+        LocalSessionStore.create(vertx, "shopping.user.session")
+    ));
+  }
+
+
 }
