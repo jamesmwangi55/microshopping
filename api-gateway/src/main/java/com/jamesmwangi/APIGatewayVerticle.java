@@ -1,5 +1,6 @@
 package com.jamesmwangi;
 
+import com.sun.prism.impl.Disposer;
 import io.vertx.core.Future;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.logging.Logger;
@@ -10,8 +11,13 @@ import io.vertx.ext.auth.oauth2.OAuth2FlowType;
 import io.vertx.ext.auth.oauth2.impl.OAuth2API;
 import io.vertx.ext.auth.oauth2.providers.KeycloakAuth;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.*;
 import io.vertx.ext.web.sstore.LocalSessionStore;
+import io.vertx.servicediscovery.Record;
+import io.vertx.servicediscovery.types.HttpEndpoint;
+
+import java.util.List;
 
 public class APIGatewayVerticle extends BaseMicroserviceVerticle {
 
@@ -89,6 +95,27 @@ public class APIGatewayVerticle extends BaseMicroserviceVerticle {
     router.route().handler(SessionHandler.create(
         LocalSessionStore.create(vertx, "shopping.user.session")
     ));
+  }
+
+  private void dispatchRequests(RoutingContext context){
+    int initialOffset = 5; //length of /api/
+
+    // run with circuit breaker in order to deal with failure
+    circuitBreaker.execute(future -> {
+      getAllEndpoints().setHandle
+    })
+  }
+
+  /**
+   * Get all REST endpoints from the service discovery infrastructure
+   *
+   * @Return asyc result
+   * */
+  private Future<List<Record>> getAllEndPoints(){
+    Future<List<Record>> future = Future.future();
+    discovery.getRecords(record -> record.getType().equals(HttpEndpoint.TYPE),
+        future.completer());
+    return future;
   }
 
 
