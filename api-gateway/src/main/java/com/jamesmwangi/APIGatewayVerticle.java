@@ -102,7 +102,25 @@ public class APIGatewayVerticle extends BaseMicroserviceVerticle {
 
     // run with circuit breaker in order to deal with failure
     circuitBreaker.execute(future -> {
-      getAllEndpoints().setHandle
+      getAllEndPoints().setHandler(ar -> {
+        if(ar.succeeded()){
+          List<Record> recordList = ar.result();
+
+
+          // get relative path and relative prefix to dispatch client
+          String path = context.request().uri();
+
+          if(path.length() <= initialOffset){
+            notFound(context);
+            future.complete();
+            return;
+          }
+
+          String prefix = (path.substring(initialOffset));
+          String path
+
+        }
+      })
     })
   }
 
