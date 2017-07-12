@@ -119,6 +119,8 @@ public class APIGatewayVerticle extends BaseMicroserviceVerticle {
           String prefix = (path.substring(initialOffset));
           String path
 
+
+
         }
       })
     })
